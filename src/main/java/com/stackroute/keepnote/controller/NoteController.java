@@ -5,9 +5,11 @@ package com.stackroute.keepnote.controller;
  * any POJO class as a controller so that Spring can recognize this class as a Controller
  * */
 
+import com.stackroute.keepnote.MyConfig;
 import com.stackroute.keepnote.model.Note;
 import com.stackroute.keepnote.repository.NoteRepository;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +23,7 @@ import java.time.LocalDateTime;
 public class NoteController {
 
 	private NoteRepository noteRepository;
-	private ApplicationContext appContext;
+	private AnnotationConfigApplicationContext appContext;
 	private Note note;
 
 	/*
@@ -42,7 +44,7 @@ public class NoteController {
 	 */
 
 	public NoteController(){
-		appContext = new ClassPathXmlApplicationContext("beans.xml");
+		appContext = new AnnotationConfigApplicationContext(MyConfig.class);
 		noteRepository = appContext.getBean("noteRepository", NoteRepository.class);
 		note = appContext.getBean("note", Note.class);
 	}
